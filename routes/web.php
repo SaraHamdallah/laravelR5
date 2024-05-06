@@ -2,6 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\Mycontroller;
+use App\Http\controllers\ClientController;
+
+//for send the data
+Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
+//for showing the form
+Route::get('addClient',[ClientController::class,'create']);
+
 
 //task2
 Route::get('/form',[Mycontroller::class,'showForm']);
