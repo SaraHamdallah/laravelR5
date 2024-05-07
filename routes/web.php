@@ -3,13 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\Mycontroller;
 use App\Http\controllers\ClientController;
+use App\Http\controllers\StudentController;
 
+//task3
+//for send the data
+Route::post('addStudent',[StudentController::class,'store'])->name('addStudent');
+//for showing the form
+Route::get('addStudent',[StudentController::class,'create']);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //for send the data
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 //for showing the form
 Route::get('addClient',[ClientController::class,'create']);
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //task2
 Route::get('/form',[Mycontroller::class,'showForm']);
 Route::post('/receveform1',[Mycontroller::class,'receiveForm']);
