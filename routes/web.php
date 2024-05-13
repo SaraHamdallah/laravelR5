@@ -5,21 +5,26 @@ use App\Http\controllers\Mycontroller;
 use App\Http\controllers\ClientController;
 use App\Http\controllers\StudentController;
 
-//task3
-//for send the data
+#task 4
+#for send the data
 Route::post('addStudent',[StudentController::class,'store'])->name('addStudent');
-//for showing the form
+#for showing the form
 Route::get('addStudent',[StudentController::class,'create']);
 
+Route::get('students',[StudentController::class,'index'])->name('students');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//for send the data
+
+#for send the data
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
-//for showing the form
-Route::get('addClient',[ClientController::class,'create']);
+#for showing the form (read from create in controller)
+Route::get('addClient',[ClientController::class,'create'])->name('addClient');
+#read from index in controller
+Route::get('clients',[ClientController::class,'index'])->name('clients');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-//task2
+
+#task2
 Route::get('/form',[Mycontroller::class,'showForm']);
 Route::post('/receveform1',[Mycontroller::class,'receiveForm']);
 Route::get('/showdata',[Mycontroller::class,'showData']);
@@ -40,12 +45,13 @@ Route::post('receiveform1', function (){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Route::get('result1',[Mycontroller::class,'get_data']);
-//Route::get('test',[Mycontroller::class,'my_data']);
+
+#Route::get('result1',[Mycontroller::class,'get_data']);
+#Route::get('test',[Mycontroller::class,'my_data']);
 #route view
-// Route::get('/', function () {
-//     return view('welcome in my first website');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});  //===Route::view('/welcome', 'welcome');
 
 // Route::get('SARA/{id?}', function ($id=0) {
 //     return 'Optional Parameter ' . $id;
