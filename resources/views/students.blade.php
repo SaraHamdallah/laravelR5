@@ -21,16 +21,29 @@
       <tr>
         <th>Student name</th>
         <th>Age</th>
+        <th>Edit</th>
+        <th>Show</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
 
-        @foreach ($student as $student) <!-- foreach ("name of compact" as $client) -->
-      <tr>
-        <td>{{ $student->studentName }}</td>
-        <td>{{ $student->age }}</td>
+      @foreach ($student as $student) <!-- foreach ("name of compact" as $student) -->
+        <tr>
+          <td>{{ $student->studentName }}</td>
+          <td>{{ $student->age }}</td>
+          <td><a href="{{ route('editStudent', $student->id) }}">Edit</a></td>
+          <td><a href="{{ route('showStudent', $student->id) }}">Show</a></td>
+          <td>
+            <form action="{{ route('delStudent' , $student->id) }}" method="post">
+              @csrf
+              @method('DELETE')
+              <input type="hidden" value="{{ $student->id }}" name="id">
+              <input type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
       @endforeach
-
     </tbody>
   </table>
 </div>

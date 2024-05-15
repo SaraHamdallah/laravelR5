@@ -4,23 +4,32 @@ use Illuminate\Support\Facades\Route;
 use App\Http\controllers\Mycontroller;
 use App\Http\controllers\ClientController;
 use App\Http\controllers\StudentController;
+use Illuminate\Support\Facades\DB;
 
-#task 4
+#tasks
 #for send the data
 Route::post('addStudent',[StudentController::class,'store'])->name('addStudent');
 #for showing the form
 Route::get('addStudent',[StudentController::class,'create']);
 
 Route::get('students',[StudentController::class,'index'])->name('students');
+Route::get('editStudent/{id}',[StudentController::class,'edit'])->name('editStudent'); #to view the editing form
+Route::put('updateStudent/{id}',[StudentController::class,'update'])->name('updateStudent'); #to do the edit/UPDATE
+Route::get('showStudent/{id}',[StudentController::class,'show'])->name('showStudent'); //TO SHOW the data of specific id
+Route::delete('delStudent/{id}',[StudentController::class,'destroy'])->name('delStudent');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#for send the data
+#to send the data
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 #for showing the form (read from create in controller)
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
 #read from index in controller
 Route::get('clients',[ClientController::class,'index'])->name('clients');
+Route::get('editClient/{id}',[ClientController::class,'edit'])->name('editClient'); #to view the editing form
+Route::put('updateClient/{id}',[ClientController::class,'update'])->name('updateClient'); #to do the edit
+Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
+Route::delete('delClient',[ClientController::class,'destroy'])->name('delClient');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
