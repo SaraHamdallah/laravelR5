@@ -7,6 +7,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="{{route('addStudent')}}">Add</a></li>
       <li><a href="{{route('students')}}">Students</a></li>
+      <li><a href="{{route('trashStudent')}}">Trash</a></li>
     </ul>
   </div>
 </nav>

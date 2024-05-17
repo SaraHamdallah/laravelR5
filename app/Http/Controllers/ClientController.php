@@ -40,7 +40,13 @@ class ClientController extends Controller
         // $client->website = $request->website;
         // $client->save();
         // return 'Inserted succ3essfully';
-        Client::create($request->only($this->columns));
+        $data = $request->validate([
+            'clientName' => 'required|max:100|min:5',
+            'phone' => 'required|min:11',
+            'email' => 'required|email:rcf',
+            'website' => 'required',
+        ]);
+        Client::create($data);
         return redirect('clients');
     }
 
@@ -69,7 +75,13 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Client::where('id', $id)->update($request->only($this->columns));
+        $data = $request->validate([
+            'clientName' => 'required|max:100|min:5',
+            'phone' => 'required|min:11',
+            'email' => 'required|email:rcf',
+            'website' => 'required',
+        ]);
+        Client::where('id', $id)->update($data);
         return redirect('clients');
     }
 
@@ -81,5 +93,30 @@ class ClientController extends Controller
         $id = $request->id;
         Client::where('id', $id)->delete();
         return redirect('clients');
+    }
+    /**
+     * trash
+     */
+    public function trash()
+    {
+        $trashed = Client::onlyTrashed()->get();
+        return view('trashClient', compact('trashed'));
+    }
+    /**
+     * Restore
+     */
+    public function restore(string $id)
+    {
+        Client::where('id', $id)->restore();
+        return redirect('clients');
+    }
+    /**
+     * Force Delete
+     */
+    public function forceDelete(Request $request)
+    {
+        $id = $request->id;
+        Client::where('id', $id)->forceDelete();
+        return redirect('trashClient');
     }
 }
