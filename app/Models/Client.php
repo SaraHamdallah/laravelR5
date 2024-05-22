@@ -14,5 +14,13 @@ class Client extends Model
         'phone',
         'email',
         'website',
+        'city',
+        'active',
+        'image',
     ];
+    # another solving to make active=yes or no in the table of clients
+    // public function getActiveStatus()
+    // {
+    //     return $this->active ? 'Yes' : 'No';
+    // }
 }

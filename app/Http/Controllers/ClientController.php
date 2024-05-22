@@ -40,12 +40,31 @@ class ClientController extends Controller
         // $client->website = $request->website;
         // $client->save();
         // return 'Inserted succ3essfully';
+        //return dd($request->all());  #to check data done array
+       $messages = $this->errMsg();
+    
         $data = $request->validate([
             'clientName' => 'required|max:100|min:5',
             'phone' => 'required|min:11',
             'email' => 'required|email:rcf',
             'website' => 'required',
-        ]);
+            'city' => 'required|max:30',
+            'image' => 'required',
+
+        ],$messages);
+        #method is used to check if a file upload exists in the request
+        //if ($request->hasFile('image')) {
+        $imgExt = $request->image->getClientOriginalExtension();
+        $fileName = time() . '.' . $imgExt;
+        $path = 'assets/images';
+        $request->image->move($path, $fileName);
+
+        $data['image'] = $fileName;
+    //}else {
+    # Handle the case where no file was uploaded
+    # For example, you might want to set a default image or return an error response
+    //}
+        $data['active'] = isset($request->active); #laravel wiil transfer if is set check boxx =1 and non = 0
         Client::create($data);
         return redirect('clients');
     }
@@ -75,12 +94,14 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages = $this->errMsg();
         $data = $request->validate([
             'clientName' => 'required|max:100|min:5',
             'phone' => 'required|min:11',
             'email' => 'required|email:rcf',
             'website' => 'required',
-        ]);
+            'city' => 'required|max:30',
+        ],$messages);
         Client::where('id', $id)->update($data);
         return redirect('clients');
     }
@@ -118,5 +139,18 @@ class ClientController extends Controller
         $id = $request->id;
         Client::where('id', $id)->forceDelete();
         return redirect('trashClient');
+    }
+    /**
+     * error custom message
+     */
+    public function errMsg(){
+        return [
+            'clientName.required' => 'name is missed',
+            'clientName.min' => 'the length is less than 5',
+            'phone.min' => 'the length is less than 11',
+            'email.email:rcf' => 'please insert a valid email',
+            'city.required' => 'please select a city',            
+
+        ];
     }
 }
