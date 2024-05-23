@@ -46,6 +46,7 @@
     @enderror
   </p>
   <input type="text" id="website" name="website" class="form-control" value="{{ old('website')}}"><br><br>
+
   <label for="city">City:</label><br>
   <p style="color:red">
     @error('city')
@@ -59,10 +60,16 @@
     <option value="Qena" {{old('city') == 'Qena' ? 'selected' : '' }}>Qena</option>
   </select>
   <br>  <br>
+  
   <label for="active">Active</label><br>
-  <input type="checkbox" id="active" name="active" class="form-control"><br><br>
+  <input type="checkbox" id="active" name="active" class="form-control" ><br><br>
   
   <label for="image">Image</label><br>
+  <p style="color:red">
+    @error('image')
+      {{ $message }}
+    @enderror
+  </p>
   <input type="file" id="image" name="image" class="form-control"><br><br>
 
   <input type="submit" value="Submit">

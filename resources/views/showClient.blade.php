@@ -12,6 +12,8 @@
 <p><h1>{{$client->phone}}</p></h1><br>
 <p><h1>{{$client->email}}</p></h1><br>
 <p><h1>{{$client->website}}</p></h1><br>
+<p><h1>{{$client->city}}</p></h1><br>
+
 
 </body>
 </html>

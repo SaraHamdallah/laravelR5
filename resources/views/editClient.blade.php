@@ -12,7 +12,7 @@
 <div class="container" style="margin-left: 20px">
 <h2>Insert client</h2>
 
-<form action="{{ route('updateClient', $client->id) }}" method="POST">
+<form action="{{ route('updateClient', $client->id) }}" method="POST" enctype="multipart/form-data">
 
     @csrf  <!-- creating input hidden token (secret code) -->
 
@@ -49,6 +49,30 @@
     @enderror
   </p>
   <input type="text" id="website" name="website" class="form-control" value="{{ $client->website }}"><br><br>
+
+  <label for="city">City:</label><br>
+  <p style="color:red">
+    @error('city')
+      {{ $message }}
+    @enderror
+  </p>
+  <select name="city" id="city" class="form-control" >
+    <option value="">Please select city</option>
+    <option value="Cairo" {{old('city') == 'Cairo' ? 'selected' : ($client->city == 'Cairo' ? 'selected' : '') }}>Cairo</option>
+    <option value="Giza" {{old('city') == 'Giza' ? 'selected' : ($client->city == 'Giza' ? 'selected' : '') }} >Giza</option>
+    <option value="Qena" {{old('city') == 'Qena' ? 'selected' : ($client->city == 'Qena' ? 'selected' : '') }}>Qena</option>
+  </select>
+  <br>  <br>
+
+  <label for="active">Active</label><br>
+  <input type="hidden" name="active" value="0">
+<input type="checkbox" id="activeCheckbox" name="active" class="form-control" value="1" @if($client->active) checked @endif><br><br>
+
+  
+  <p><img src="{{ asset('assets/images/' . $client->image) }}" alt=""></p><br>
+  <label for="image">New Image</label><br>
+  <input type="file" id="image" name="image" class="form-control"><br><br>
+
   
   <input type="submit" value="Submit">
 </form> 

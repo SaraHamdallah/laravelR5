@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -30,44 +31,48 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        #to insert data
-        // $client = new Client();
-        // $client->clientName = $request->clientName;
-        // $client->phone = $request->phone;
-        // $client->email = $request->email;
-        // $client->website = $request->website;
-        // $client->save();
-        // return 'Inserted succ3essfully';
-        //return dd($request->all());  #to check data done array
-       $messages = $this->errMsg();
     
+     public function store(Request $request)
+     {
+         #to insert data
+         // $client = new Client();
+         // $client->clientName = $request->clientName;
+         // $client->phone = $request->phone;
+         // $client->email = $request->email;
+         // $client->website = $request->website;
+         // $client->save();
+         // return 'Inserted succ3essfully';
+         //return dd($request->all());  #to check data done array
+
+        $messages = $this->errMsg();
+        //dd($request->file('image'));
         $data = $request->validate([
-            'clientName' => 'required|max:100|min:5',
-            'phone' => 'required|min:11',
-            'email' => 'required|email:rcf',
-            'website' => 'required',
-            'city' => 'required|max:30',
-            'image' => 'required',
+             'clientName' => 'required|max:100|min:5',
+             'phone' => 'required|min:11',
+             'email' => 'required|email:rcf',
+             'website' => 'required',
+             'city' => 'required|max:30',
+             'image' => 'required|file|mimes:jpeg,jpg',
+         ],$messages);
 
-        ],$messages);
+        //  dd($request->all());
+        //  dd($request->hasFile('image'));
         #method is used to check if a file upload exists in the request
-        //if ($request->hasFile('image')) {
-        $imgExt = $request->image->getClientOriginalExtension();
-        $fileName = time() . '.' . $imgExt;
-        $path = 'assets/images';
-        $request->image->move($path, $fileName);
+        if ($request->hasFile('image')) {
+            $imgExt = $request->image->getClientOriginalExtension();
+            $fileName = time() . '.' . $imgExt;
+            $path = 'assets/images';
+            $request->image->move($path, $fileName);
+            $data['image'] = $fileName;
+        }else {
+        # Handle the case where no file was uploaded (set a default image or return an error response)
+        return 'No file uploaded.';
+        }
 
-        $data['image'] = $fileName;
-    //}else {
-    # Handle the case where no file was uploaded
-    # For example, you might want to set a default image or return an error response
-    //}
         $data['active'] = isset($request->active); #laravel wiil transfer if is set check boxx =1 and non = 0
         Client::create($data);
         return redirect('clients');
-    }
+     }
 
     /**
      * Display the specified resource.
@@ -101,10 +106,26 @@ class ClientController extends Controller
             'email' => 'required|email:rcf',
             'website' => 'required',
             'city' => 'required|max:30',
+            'active'=>'required|boolean|in:1,0',// Validate the 'active' field as boolean
+           'image' => 'nullable|file|image|max:12288', // Validate the 'image' field as an image file
+            
         ],$messages);
+        // Convert 'active' checkbox value to boolean
+        $data['active'] = (bool)$data['active'];
+
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            $path = 'assets/images';
+            $image->move($path, $fileName);
+            $data['image'] = $fileName; // Store the image path in the database
+        }
+        // Update client data
         Client::where('id', $id)->update($data);
         return redirect('clients');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -147,6 +168,7 @@ class ClientController extends Controller
         return [
             'clientName.required' => 'name is missed',
             'clientName.min' => 'the length is less than 5',
+            'phone.required' => 'please insert a phone',
             'phone.min' => 'the length is less than 11',
             'email.email:rcf' => 'please insert a valid email',
             'city.required' => 'please select a city',            
