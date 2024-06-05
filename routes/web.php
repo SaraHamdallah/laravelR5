@@ -52,6 +52,9 @@ Route::get('/showdata',[Mycontroller::class,'showData']);
 Route::get('form1', function (){
     return view('form1');
 }); 
+Route::get('stacked', function (){
+    return view('stacked');
+}); 
 
 //second route:(route name) route to receive the data from the form
 Route::post('receiveform1', function (){

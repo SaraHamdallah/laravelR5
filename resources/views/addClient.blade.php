@@ -63,6 +63,7 @@
   
   <label for="active">Active</label><br>
   <input type="checkbox" id="active" name="active" class="form-control" ><br><br>
+ <!-- value="{{ old('active') ? 'checked' : '' }}"-->
   
   <label for="image">Image</label><br>
   <p style="color:red">
