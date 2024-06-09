@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\City;
 
 class Client extends Model
 {
@@ -14,10 +15,14 @@ class Client extends Model
         'phone',
         'email',
         'website',
-        'city',
+        'city_id',
         'active',
         'image',
+        'Addres',
     ];
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
     # another solving to make active=yes or no in the table of clients
     // public function getActiveStatus()
     // {

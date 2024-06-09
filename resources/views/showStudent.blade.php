@@ -9,6 +9,13 @@
 <body>
 <p><h1>{{$student->studentName}}</p></h1><br>
 <p><h1>{{$student->age}}</p></h1><br>
-
+<h1><p>
+  Courses:
+  <ul>
+    @foreach($student->courses as $course)
+      <li>{{ $course->name }}</li>
+    @endforeach
+  </ul>
+</p></h1>
 </body>
 </html>

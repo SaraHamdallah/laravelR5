@@ -22,7 +22,7 @@ class ClientFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail, // Added () after unique() method
             'website' => $this->faker->url, // Changed website to url for generating URLs
-            'city' => $this->faker->city,
+            'city_id' => $this->faker->numberBetween(1, 20),
             'active' => $this->faker->boolean, // Changed no to boolean for generating true/false values
             'image' => $this->faker->imageUrl(), // Added () after imageUrl method
             'Addres' => $this->faker->address, // Define the 'Addres' field here
