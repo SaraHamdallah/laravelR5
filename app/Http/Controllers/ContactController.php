@@ -11,10 +11,13 @@ class ContactController extends Controller
     public function send(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'name' => 'required|string|max:255|exists:users,name',
+            'email' => 'required|email|max:255|exists:users,email',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
+        ],[
+            'name.exists' => 'The name does not exist in our records.',
+            'email.exists' => 'The email does not exist in our records.',
         ]);
 
         Mail::to('recipient@email.com')->send(new ContactMail(

@@ -36,13 +36,19 @@
 				</span>
 
 				<div class="wrap-input1 validate-input" data-validate = "Name is required">
-					<input class="input1" type="text" name="name" placeholder="Name">
-					<span class="shadow-input1"></span>
+					<input class="input1" type="text" name="name" value="{{ old('name') }}" placeholder="Name">
+					@error('name')
+                        <div style="color:red">{{ $message }}</div>
+                    @enderror
+                    <span class="shadow-input1"></span>
 				</div>
 
 				<div class="wrap-input1 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-					<input class="input1" type="text" name="email" placeholder="Email">
-					<span class="shadow-input1"></span>
+					<input class="input1" type="text" name="email" value="{{ old('email') }}" placeholder="Email">
+					@error('email')
+                        <div style="color:red">{{ $message }}</div>
+                    @enderror
+                    <span class="shadow-input1"></span>
 				</div>
 
 				<div class="wrap-input1 validate-input" data-validate = "Subject is required">
