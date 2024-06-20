@@ -4,8 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\controllers\Mycontroller;
 use App\Http\controllers\ClientController;
 use App\Http\controllers\StudentController;
+use App\Http\controllers\ContactController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Http\controllers\MailController;
+use App\Mail\ContactMail;
 
+Route::get('/', function (){
+        return view('welcome');
+    }); 
 #tasks
 #for send the data
 Route::post('addStudent',[StudentController::class,'store'])->name('addStudent');
@@ -28,7 +35,7 @@ Route::post('insertClient',[ClientController::class,'store'])->name('insertClien
 #for showing the form (read from create in controller)
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
 #read from index in controller
-Route::get('clients',[ClientController::class,'index'])->name('clients');
+Route::get('/clients',[ClientController::class,'index'])->middleware('verified')->name('clients');
 Route::get('editClient/{id}',[ClientController::class,'edit'])->name('editClient'); #to view the editing form
 Route::put('updateClient/{id}',[ClientController::class,'update'])->name('updateClient'); #to do the edit
 Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
@@ -128,3 +135,46 @@ Route::get('/', function () {
 //php artisan make:controller MycontrController (command line)
 
 
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/sendEmail', [App\Http\Controllers\MailController::class, 'sendEmail'])->name('sendEmail');
+// Route::get('/send-test-email', function () {
+//     Mail::raw('This is a test email', function ($message) {
+//         $message->to('your_email@example.com')->subject('Test Email');
+//     });
+
+//     return 'Test email sent!';
+// });
+
+Route::get('myval',[Mycontroller::class,'val'])->name('val');
+Route::get('fval',[Mycontroller::class,'fval'])->name('fval');
+Route::get('restval',[Mycontroller::class,'restval'])->name('restval');
+Route::get('delval',[Mycontroller::class,'delval'])->name('delval');
+Route::get('sendEmail',[Mailcontroller::class,'sendEmail'])->name('sendEmail');
+
+
+// Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+// Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+// Route::get('/contact',function(){
+
+//     Mail::to( 'recipient@email.com')->send( 
+//         new ContactMail(
+//         fromEmail:'test@example.com',
+//         fromName:'ahmed',
+//         theSubject:'test email',
+//         theMessage:'welcome my man',
+//         recipientName:'John',
+//         )
+//     );
+//     return "mail sent!";
+// });
+
+Route::get('/contact', function () {
+    return view('contactUs');
+})->name('contact.form');
+
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');

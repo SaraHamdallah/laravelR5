@@ -20,6 +20,8 @@ class Client extends Model
         'image',
         'Addres',
     ];
+
+    #tthis line to make relation many to many
     public function city(){
         return $this->belongsTo(City::class);
     }
