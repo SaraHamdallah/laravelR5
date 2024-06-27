@@ -10,4 +10,5 @@ Artisan::command('inspire', function () {
 
 Schedule::command('user:expiration')->everyMinute();
 
-Schedule::command('app:database-backup')->everyMinute()->withoutOverlapping();
+//Schedule::command('app:database-backup')->everyMinute()->withoutOverlapping();
+Schedule::command('database:backup')->everyMinute();
