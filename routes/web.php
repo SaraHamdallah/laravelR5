@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\controllers\MailController;
 use App\Mail\ContactMail;
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
+
 Route::get('/', function (){
         return view('welcome');
     }); 
@@ -79,7 +85,7 @@ Route::post('receiveform1', function (){
 Route::get('/', function () {
     return view('welcome');
 });  //===Route::view('/welcome', 'welcome');
-
+/*
 // Route::get('SARA/{id?}', function ($id=0) {
 //     return 'Optional Parameter ' . $id;
 // })->where(['id' => '[0-9]+']);   //Regular Expression
@@ -132,7 +138,7 @@ Route::get('/', function () {
 /* 
 هو عقل الابليكشن ومسئول عن ربط كل الاجزاء الخاصه بالابليكشن وهو حلقة الوصل بين 
 (ال route و ال view)*/
-//php artisan make:controller MycontrController (command line)
+//php artisan make:controller MycontrController (command line)*/
 
 
 
@@ -178,3 +184,4 @@ Route::get('/contact', function () {
 })->name('contact.form');
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+});

@@ -21,7 +21,7 @@ class Client extends Model
         'Addres',
     ];
 
-    #tthis line to make relation many to many
+    #this line to make relation many to many
     public function city(){
         return $this->belongsTo(City::class);
     }

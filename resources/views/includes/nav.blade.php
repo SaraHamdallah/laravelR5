@@ -10,6 +10,9 @@
 
       <li><a href="{{route('trashClient')}}">Trash</a></li>
       <li><a href="#">Page 3</a></li>
+
+      <li><a href="{{ LaravelLocalization::getLocalizedURL('en') }}">en</a></li>
+      <li><a href="{{ LaravelLocalization::getLocalizedURL('ar') }}">ar</a></li>
         @yield('menu')
         @stack('submenu')
     </ul>

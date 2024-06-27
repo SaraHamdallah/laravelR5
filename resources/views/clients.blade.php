@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{LaravelLocalization::getCurrentLocale()}}" dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 <head>
   <title>Clients</title>
   <meta charset="utf-8">
@@ -11,19 +11,19 @@
 <body>
 @include('includes.nav')
 <div class="container">
-  <h2>Clients data</h2>
+  <h2>{{__('messages.client_data')}}</h2>
      
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>client name</th>
-        <th>phone</th>
-        <th>Email</th>
-        <th>website</th>
-        <th>Active</th>
-        <th>Edit</th>
-        <th>Show</th>
-        <th>Delete</th>
+        <th>{{__('messages.client_name')}}</th>
+        <th>{{ __('messages.phone')}}</th>
+        <th>{{ __('messages.email')}}</th>
+        <th>{{ __('messages.website')}}</th>
+        <th>{{ __('messages.Active')}}</th>
+        <th>{{ __('messages.Edit')}}</th>
+        <th>{{ __('messages.Show')}}</th>
+        <th>{{ __('messages.Delete')}}</th>
       </tr>
     </thead>
     <tbody>
@@ -35,14 +35,14 @@
         <td>{{ $client->email }}</td>
         <td>{{ $client->website }}</td>
         <td>{{ $client->active ? 'Yes' : 'No'}}</td>
-        <td><a href="{{ route('editClient', $client->id) }}">Edit</a></td>
-        <td><a href="{{ route('showClient', $client->id) }}">Show</a></td>
+        <td><a href="{{ route('editClient', $client->id) }}">{{ __('messages.Edit')}}</a></td>
+        <td><a href="{{ route('showClient', $client->id) }}">{{ __('messages.Show')}}</a></td>
         <td>
           <form action="{{ route('delClient') }}" method="post">
             @csrf
             @method('DELETE')
             <input type="hidden" value="{{ $client->id }}" name="id">
-            <input type="submit" value="Delete">
+            <input type="submit" value="{{ __('messages.Delete')}}">
           </form>
         </td>
       </tr>
